@@ -266,9 +266,8 @@ function getTableQuery(url) {
            datatype: 'json',
            success: function (data) {
                if (data && data != "") {
-                   
-
                    for (var i = 0; i < data.length; i++) {
+                       createAccordionForTable(data[i].title, 'Table' + (i + 1), (i + 1));
                        getTable(data[i].query, data[i].metadataUrl, data[i].cols, data[i].rows, '#Table' + (i + 1));
                    }
                    
@@ -307,6 +306,7 @@ function numberOfContents(vector, val) {
 }
 
 function createAccordionForTable(title, divid, order) {
+   
     $('#accordion2').append(' <div class="panel panel-default" ><div class="panel-heading"><h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#' + divid + '">' + title + '</a> </h4></div><div id="' + divid + '" class="panel-collapse collapse in"><div class="panel-body"><div id="' + divid + '"></div></div></div></div>');
 }
 

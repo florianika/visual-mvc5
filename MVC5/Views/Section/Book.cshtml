@@ -123,8 +123,6 @@
                     $("#title").empty();
                     $("#content").empty();
                     $("#accordion2").empty();
-                    createAccordionForTable('First Title', 'Table1', 1);
-                    createAccordionForTable('Second Table','Table2', 2);
                     getSectionDesc('http://localhost:1690/Section/GetSelectedSection/' + $(this).attr("id"));
                     getTableQuery('http://localhost:1690/Section/GetTablesOfSection/' + $(this).attr("id"));
                 });
