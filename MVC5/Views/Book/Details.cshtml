@@ -1,0 +1,50 @@
+﻿@model MVC5.Models.Book
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Book</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TitleEn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TitleEn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TitleAl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TitleAl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionEn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionEn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DescriptionAl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DescriptionAl)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BookId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

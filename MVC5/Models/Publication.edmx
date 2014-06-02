@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PublicationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookId" />
+          </Key>
+          <Property Name="BookId" Type="int" Nullable="false" />
+          <Property Name="TitleEn" Type="varchar" MaxLength="50" />
+          <Property Name="TitleAl" Type="varchar" MaxLength="50" />
+          <Property Name="DescriptionEn" Type="varchar" MaxLength="500" />
+          <Property Name="DescriptionAl" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Graph">
+          <Key>
+            <PropertyRef Name="GraphId" />
+          </Key>
+          <Property Name="GraphId" Type="int" Nullable="false" />
+          <Property Name="SectionId" Type="int" />
+          <Property Name="Graph" Type="int" />
+          <Property Name="GraphTableUrlAl" Type="varchar" MaxLength="100" />
+          <Property Name="GraphTableUrlEn" Type="varchar" MaxLength="100" />
+          <Property Name="GraphTableQuery" Type="varchar" MaxLength="500" />
+          <Property Name="GraphOrder" Type="int" />
+          <Property Name="GraphTypeId" Type="int" />
+        </EntityType>
+        <EntityType Name="GraphType">
+          <Key>
+            <PropertyRef Name="GraphTypeId" />
+          </Key>
+          <Property Name="GraphTypeId" Type="int" Nullable="false" />
+          <Property Name="GraphTypeEn" Type="varchar" MaxLength="50" />
+          <Property Name="GraphTypeAl" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionId" />
+          </Key>
+          <Property Name="SectionId" Type="int" Nullable="false" />
+          <Property Name="BookId" Type="int" />
+          <Property Name="Section" Type="int" />
+          <Property Name="TitleAl" Type="varchar" MaxLength="50" />
+          <Property Name="TitleEn" Type="varchar" MaxLength="50" />
+          <Property Name="DescriptionAl" Type="varchar(max)" />
+          <Property Name="DescriptionEn" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="TableId" />
+          </Key>
+          <Property Name="TableId" Type="int" Nullable="false" />
+          <Property Name="SectionId" Type="int" />
+          <Property Name="TableNo" Type="int" />
+          <Property Name="TableMetadataUrlEn" Type="varchar" MaxLength="100" />
+          <Property Name="TableQuery" Type="varchar" MaxLength="1000" />
+          <Property Name="TableMetadataUrlAl" Type="varchar" MaxLength="100" />
+          <Property Name="TableOrder" Type="int" />
+          <Property Name="NumberOfContents" Type="int" />
+          <Property Name="Cols" Type="varchar" MaxLength="50" />
+          <Property Name="Rows" Type="varchar" MaxLength="50" />
+          <Property Name="ColsEn" Type="varchar" MaxLength="50" />
+          <Property Name="RowEn" Type="varchar" MaxLength="50" />
+          <Property Name="TitleAl" Type="varchar" MaxLength="100" />
+          <Property Name="TitleEn" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Graph_GraphType">
+          <End Role="GraphType" Type="Self.GraphType" Multiplicity="0..1" />
+          <End Role="Graph" Type="Self.Graph" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GraphType">
+              <PropertyRef Name="GraphTypeId" />
+            </Principal>
+            <Dependent Role="Graph">
+              <PropertyRef Name="GraphTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Graph_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+          <End Role="Graph" Type="Self.Graph" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Graph">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Section_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="0..1" />
+          <End Role="Section" Type="Self.Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+          <End Role="Table" Type="Self.Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Table">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PublicationModelStoreContainer">
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Graph" EntityType="Self.Graph" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GraphType" EntityType="Self.GraphType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Table" EntityType="Self.Table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Graph_GraphType" Association="Self.FK_Graph_GraphType">
+            <End Role="GraphType" EntitySet="GraphType" />
+            <End Role="Graph" EntitySet="Graph" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Graph_Section" Association="Self.FK_Graph_Section">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Graph" EntitySet="Graph" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Section_Book" Association="Self.FK_Section_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Section" EntitySet="Section" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Section" Association="Self.FK_Table_Section">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Table" EntitySet="Table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PublicationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookId" />
+          </Key>
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TitleAl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescriptionEn" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="DescriptionAl" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sections" Relationship="PublicationModel.FK_Section_Book" FromRole="Book" ToRole="Section" />
+        </EntityType>
+        <EntityType Name="Graph">
+          <Key>
+            <PropertyRef Name="GraphId" />
+          </Key>
+          <Property Name="GraphId" Type="Int32" Nullable="false" />
+          <Property Name="SectionId" Type="Int32" />
+          <Property Name="GraphTableUrlAl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GraphTableUrlEn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GraphTableQuery" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="GraphOrder" Type="Int32" />
+          <Property Name="GraphTypeId" Type="Int32" />
+          <NavigationProperty Name="GraphType" Relationship="Self.FK_Graph_GraphType" FromRole="Graph" ToRole="GraphType" />
+          <NavigationProperty Name="Section" Relationship="Self.FK_Graph_Section" FromRole="Graph" ToRole="Section" />
+          <Property Name="Graph1" Type="Int32" />
+        </EntityType>
+        <EntityType Name="GraphType">
+          <Key>
+            <PropertyRef Name="GraphTypeId" />
+          </Key>
+          <Property Name="GraphTypeId" Type="Int32" Nullable="false" />
+          <Property Name="GraphTypeEn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GraphTypeAl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Graphs" Relationship="Self.FK_Graph_GraphType" FromRole="GraphType" ToRole="Graph" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionId" />
+          </Key>
+          <Property Name="SectionId" Type="Int32" Nullable="false" />
+          <Property Name="TitleAl" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TitleEn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DescriptionAl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DescriptionEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Graphs" Relationship="Self.FK_Graph_Section" FromRole="Section" ToRole="Graph" />
+          <NavigationProperty Name="Tables" Relationship="Self.FK_Table_Section" FromRole="Section" ToRole="Table" />
+          <Property Name="Section1" Type="Int32" />
+          <Property Name="BookId" Type="Int32" />
+          <NavigationProperty Name="Book" Relationship="PublicationModel.FK_Section_Book" FromRole="Section" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Table">
+          <Key>
+            <PropertyRef Name="TableId" />
+          </Key>
+          <Property Name="TableId" Type="Int32" Nullable="false" />
+          <Property Name="SectionId" Type="Int32" />
+          <Property Name="TableMetadataUrlEn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TableQuery" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="TableMetadataUrlAl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TableOrder" Type="Int32" />
+          <Property Name="NumberOfContents" Type="Int32" />
+          <NavigationProperty Name="Section" Relationship="Self.FK_Table_Section" FromRole="Table" ToRole="Section" />
+          <Property Name="TableNo" Type="Int32" />
+          <Property Name="Cols" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Rows" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ColsEn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RowEn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="TitleAl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TitleEn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_Graph_GraphType">
+          <End Role="GraphType" Type="Self.GraphType" Multiplicity="0..1" />
+          <End Role="Graph" Type="Self.Graph" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GraphType">
+              <PropertyRef Name="GraphTypeId" />
+            </Principal>
+            <Dependent Role="Graph">
+              <PropertyRef Name="GraphTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Graph_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+          <End Role="Graph" Type="Self.Graph" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Graph">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_Section">
+          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+          <End Role="Table" Type="Self.Table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Table">
+              <PropertyRef Name="SectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PublicationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="Graphs" EntityType="Self.Graph" />
+          <EntitySet Name="GraphTypes" EntityType="Self.GraphType" />
+          <EntitySet Name="Sections" EntityType="Self.Section" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Tables" EntityType="Self.Table" />
+          <AssociationSet Name="FK_Graph_GraphType" Association="Self.FK_Graph_GraphType">
+            <End Role="GraphType" EntitySet="GraphTypes" />
+            <End Role="Graph" EntitySet="Graphs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Graph_Section" Association="Self.FK_Graph_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="Graph" EntitySet="Graphs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_Section" Association="Self.FK_Table_Section">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="Table" EntitySet="Tables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Section_Book" Association="PublicationModel.FK_Section_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Section" EntitySet="Sections" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Section_Book">
+          <End Type="PublicationModel.Book" Role="Book" Multiplicity="0..1" />
+          <End Type="PublicationModel.Section" Role="Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PublicationModelStoreContainer" CdmEntityContainer="PublicationEntities">
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="PublicationModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="TitleEn" ColumnName="TitleEn" />
+                <ScalarProperty Name="TitleAl" ColumnName="TitleAl" />
+                <ScalarProperty Name="DescriptionEn" ColumnName="DescriptionEn" />
+                <ScalarProperty Name="DescriptionAl" ColumnName="DescriptionAl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Graphs">
+            <EntityTypeMapping TypeName="PublicationModel.Graph">
+              <MappingFragment StoreEntitySet="Graph">
+                <ScalarProperty Name="Graph1" ColumnName="Graph" />
+                <ScalarProperty Name="GraphId" ColumnName="GraphId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="GraphTableUrlAl" ColumnName="GraphTableUrlAl" />
+                <ScalarProperty Name="GraphTableUrlEn" ColumnName="GraphTableUrlEn" />
+                <ScalarProperty Name="GraphTableQuery" ColumnName="GraphTableQuery" />
+                <ScalarProperty Name="GraphOrder" ColumnName="GraphOrder" />
+                <ScalarProperty Name="GraphTypeId" ColumnName="GraphTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GraphTypes">
+            <EntityTypeMapping TypeName="PublicationModel.GraphType">
+              <MappingFragment StoreEntitySet="GraphType">
+                <ScalarProperty Name="GraphTypeId" ColumnName="GraphTypeId" />
+                <ScalarProperty Name="GraphTypeEn" ColumnName="GraphTypeEn" />
+                <ScalarProperty Name="GraphTypeAl" ColumnName="GraphTypeAl" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="PublicationModel.Section">
+              <MappingFragment StoreEntitySet="Section">
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="Section1" ColumnName="Section" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="TitleAl" ColumnName="TitleAl" />
+                <ScalarProperty Name="TitleEn" ColumnName="TitleEn" />
+                <ScalarProperty Name="DescriptionAl" ColumnName="DescriptionAl" />
+                <ScalarProperty Name="DescriptionEn" ColumnName="DescriptionEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PublicationModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tables">
+            <EntityTypeMapping TypeName="PublicationModel.Table">
+              <MappingFragment StoreEntitySet="Table">
+                <ScalarProperty Name="TitleEn" ColumnName="TitleEn" />
+                <ScalarProperty Name="TitleAl" ColumnName="TitleAl" />
+                <ScalarProperty Name="RowEn" ColumnName="RowEn" />
+                <ScalarProperty Name="ColsEn" ColumnName="ColsEn" />
+                <ScalarProperty Name="Rows" ColumnName="Rows" />
+                <ScalarProperty Name="Cols" ColumnName="Cols" />
+                <ScalarProperty Name="TableNo" ColumnName="TableNo" />
+                <ScalarProperty Name="TableId" ColumnName="TableId" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+                <ScalarProperty Name="TableMetadataUrlEn" ColumnName="TableMetadataUrlEn" />
+                <ScalarProperty Name="TableQuery" ColumnName="TableQuery" />
+                <ScalarProperty Name="TableMetadataUrlAl" ColumnName="TableMetadataUrlAl" />
+                <ScalarProperty Name="TableOrder" ColumnName="TableOrder" />
+                <ScalarProperty Name="NumberOfContents" ColumnName="NumberOfContents" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

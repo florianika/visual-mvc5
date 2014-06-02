@@ -1,0 +1,101 @@
+﻿@{
+    ViewBag.Title = "Content";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+@Scripts.Render("~/bundles/jqplot_home_charts")
+
+
+<div class="row row-offcanvas row-offcanvas-right">
+
+    <div class="col-xs-12 col-sm-9">
+        <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+        </p>
+        <div class="jumbotron">
+            <h1>Hello, world!</h1>
+            <p>This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.</p>
+        </div>
+    
+        
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#text" data-toggle="tab">Text</a></li>
+            <li><a href="#table" data-toggle="tab">Visualisation</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="text"><div><h2>Lorem Ipsum</h2> are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</div></div>
+            <div class="tab-pane" id="table"><div id="output">Kot</div></div>
+        </div>
+        <script>
+            $(function () {
+                $('#myTab').tab()
+            });
+            google.load("visualization", "1", { packages: ["corechart", "charteditor"] });
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+                var start = e.target.toString().indexOf('#');
+                var end = e.target.toString().length;
+                if (e.target.toString().substring(start, end) === '#graph') {
+                    //drawChart1();
+                    getDatasets("http://json-stat.org/samples/oecd-canada.json");
+                }// activated tab
+                if (e.target.toString().substring(start, end) === '#table') {
+
+                    var jsonQuery = {
+                        "query": [{
+                            "code": "Prefecture", "selection": {
+                                "filter": "all",
+                                "values": ["*"]
+                            }
+                        },
+                        {
+                            "code": "Year", "selection": {
+                                "filter": "top",
+                                "values": ["2"]
+                            }
+                        }],
+                        "response": { "format": "json" }
+                    };
+                    alert(JSON.stringify(jsonQuery));
+                    getTable(jsonQuery, 'http://instat.gov.al:8080/api/al/DST/OS/DVS/DVS0001');
+                }
+                e.relatedTarget // previous tab
+
+            });
+            //$("button, a").click(function (e) { load(e); });
+            //$("input").submit(function (e) { load(e); });
+
+
+          
+        </script>
+
+    <div id="json-stat">
+        <div id="datasets"></div>
+        <h3 id="dim1header" ></h3>
+        <div id="dimension1"></div>
+        <h3 id="dim2header" ></h3>
+        <div id="dimension2"></div>
+        <h3 id="dim3header" ></h3>
+        <div id="dimension3"></div>
+    </div>
+    </div><!--/span-->
+
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        <div class="list-group">
+            <a href="#" class="list-group-item active">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+            <a href="#" class="list-group-item">Link</a>
+        </div>
+    </div><!--/span-->
+</div><!--/row-->
+

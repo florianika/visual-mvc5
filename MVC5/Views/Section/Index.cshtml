@@ -1,0 +1,134 @@
+﻿@model IEnumerable<MVC5.Models.Section>
+
+@{
+    ViewBag.Title = "Index";
+}
+@Scripts.Render("~/bundles/jqplot_home_charts")
+
+<h2>Index</h2>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TitleAl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TitleEn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DescriptionAl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DescriptionEn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Chapter.TitleAl)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TitleAl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TitleEn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DescriptionAl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DescriptionEn)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Chapter.TitleAl)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.SectionId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.SectionId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.SectionId })
+        </td>
+    </tr>
+}
+
+</table>*@
+
+<div class="row row-offcanvas row-offcanvas-right">
+
+    <div class="col-xs-12 col-sm-9">
+        <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+        </p>
+        
+
+
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#text" data-toggle="tab">Text</a></li>
+            <li><a href="#table" data-toggle="tab">Visualisation</a></li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane active" id="text"><div><h2>Lorem Ipsum</h2></div></div>
+            <div class="tab-pane" id="table"><div id="output"></div></div>
+        </div>
+        <script>
+            $(function () {
+                $('#myTab').tab()
+            });
+            google.load("visualization", "1", { packages: ["corechart", "charteditor"] });
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+
+                var start = e.target.toString().indexOf('#');
+                var end = e.target.toString().length;
+                if (e.target.toString().substring(start, end) === '#graph') {
+                    //drawChart1();
+                    getDatasets("http://json-stat.org/samples/oecd-canada.json");
+                }// activated tab
+                if (e.target.toString().substring(start, end) === '#table') {
+
+                    var jsonQuery = {
+                        "query": [{
+                            "code": "Prefecture", "selection": {
+                                "filter": "all",
+                                "values": ["*"]
+                            }
+                        },
+                        {
+                            "code": "Year", "selection": {
+                                "filter": "top",
+                                "values": ["2"]
+                            }
+                        }],
+                        "response": { "format": "json" }
+                    };
+                    alert(JSON.stringify(jsonQuery));
+                    getTable(jsonQuery, 'http://instat.gov.al:8080/api/al/DST/OS/DVS/DVS0001');
+                }
+                e.relatedTarget // previous tab
+
+            });
+            //$("button, a").click(function (e) { load(e); });
+            //$("input").submit(function (e) { load(e); });
+
+
+
+        </script>
+
+      
+    </div><!--/span-->
+
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        <div class="list-group">
+@foreach (var item in Model) {
+
+            <a href="#" class="list-group-item active">@Html.DisplayFor(modelItem => item.TitleAl)</a>
+            
+}
+        </div>
+    </div><!--/span-->
+</div><!--/row-->
+

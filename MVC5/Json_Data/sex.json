@@ -1,0 +1,25 @@
+﻿{
+   \"dataset\" : {
+      \"label\" : \"Population in Tuvalu in 2002. By sex\",
+      \"value\" : [4729, 4832, 9561],
+      \"dimension\" : {
+         \"id\" : [\"metric\", \"time\", \"geo\", \"sex\"],
+         \"size\" : [1, 1, 1, 3],
+         \"sex\" : {
+            \"label\" : \"Sex\",
+            \"category\" : {
+               \"index\" : {
+                 \"M\" : 0,
+                 \"F\" : 1,
+                 \"T\" : 2
+               },
+               \"label\" : {
+                 \"M\" : \"Men\",
+                 \"F\" : \"Women\",
+                 \"T\" : \"Total\"
+               }
+            }
+         }
+      }
+   }
+}
