@@ -54,7 +54,7 @@ namespace MVC5.Controllers
                 desc = section.DescriptionEn
             }, JsonRequestBehavior.AllowGet);
         }
-
+        // API GET /Section/GetTablesOfSecton/1
         public JsonResult GetTablesOfSection(int id)
         {
             var section = db.Sections.Find(id);
@@ -72,6 +72,63 @@ namespace MVC5.Controllers
                         title = t.TitleAl
             }), JsonRequestBehavior.AllowGet);
         }
+
+        // API GET /Section/GetTablesOfSectonEn/1
+        public JsonResult GetTablesOfSectionEn(int id)
+        {
+            var section = db.Sections.Find(id);
+            var tables = section.Tables;
+
+            return Json(tables.Select(t => new
+            {
+                id = t.TableId,
+                metadataUrl = t.TableMetadataUrlEn,
+                query = t.TableQuery,
+                order = t.TableOrder,
+                contents = t.NumberOfContents,
+                section = t.SectionId,
+                cols = t.ColsEn,
+                rows = t.RowEn,
+                title = t.TitleEn
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+        //API GET /Section/GetGraphOfSection/1
+        public JsonResult GetGraphOfSection(int id)
+        {
+            var section = db.Sections.Find(id);
+            var graphs = section.Graphs;
+
+            return Json(graphs.Select(g => new
+            {
+                id = g.GraphId,
+                title = g.GraphTitleAl,
+                metadataUrl = g.GraphTableUrlAl,
+                query = g.GraphTableQuery,
+                order = g.GraphOrder,
+                sectionid = g.SectionId,
+                type = g.GraphTypeId
+            }), JsonRequestBehavior.AllowGet);
+        }
+
+            //API GET /Section/GetGraphOfSection/1
+        public JsonResult GetGraphOfSectionEn(int id)
+        {
+            var section = db.Sections.Find(id);
+            var graphs = section.Graphs;
+
+            return Json(graphs.Select(g => new
+            {
+                id = g.GraphId,
+                title = g.GraphTitleAl,
+                metadataUrl = g.GraphTableUrlEn,
+                query = g.GraphTableQuery,
+                order = g.GraphOrder,
+                sectionid = g.SectionId,
+                type = g.GraphTypeId
+            }), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: /Section/Details/5
         public ActionResult Details(int? id)
         {

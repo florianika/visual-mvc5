@@ -27,6 +27,8 @@
           <Property Name="GraphTableQuery" Type="varchar" MaxLength="500" />
           <Property Name="GraphOrder" Type="int" />
           <Property Name="GraphTypeId" Type="int" />
+          <Property Name="GraphTitleAl" Type="varchar" MaxLength="100" />
+          <Property Name="GraphTitleEn" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="GraphType">
           <Key>
@@ -178,6 +180,8 @@
           <NavigationProperty Name="GraphType" Relationship="Self.FK_Graph_GraphType" FromRole="Graph" ToRole="GraphType" />
           <NavigationProperty Name="Section" Relationship="Self.FK_Graph_Section" FromRole="Graph" ToRole="Section" />
           <Property Name="Graph1" Type="Int32" />
+          <Property Name="GraphTitleAl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="GraphTitleEn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="GraphType">
           <Key>
@@ -325,6 +329,8 @@
           <EntitySetMapping Name="Graphs">
             <EntityTypeMapping TypeName="PublicationModel.Graph">
               <MappingFragment StoreEntitySet="Graph">
+                <ScalarProperty Name="GraphTitleEn" ColumnName="GraphTitleEn" />
+                <ScalarProperty Name="GraphTitleAl" ColumnName="GraphTitleAl" />
                 <ScalarProperty Name="Graph1" ColumnName="Graph" />
                 <ScalarProperty Name="GraphId" ColumnName="GraphId" />
                 <ScalarProperty Name="SectionId" ColumnName="SectionId" />

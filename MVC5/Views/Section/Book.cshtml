@@ -113,8 +113,9 @@
             </div>
 
 
-            <div class="tab-pane" id="graph"><div id="graphoutput"></div></div>
+            <div class="tab-pane" id="graph"><div class="panel-group" id="accordion3"></div></div>
         </div>
+        <div id="1"></div>
         <script>
             $(document).ready(function () {
                
@@ -125,6 +126,7 @@
                     $("#accordion2").empty();
                     getSectionDesc('http://localhost:1690/Section/GetSelectedSection/' + $(this).attr("id"));
                     getTableQuery('http://localhost:1690/Section/GetTablesOfSection/' + $(this).attr("id"));
+                    getGraphQuery('http://localhost:1690/Section/GetGraphOfSection/' + $(this).attr("id"));
                 });
         //$("#1").click(function () {
         //    $("#title").empty();
