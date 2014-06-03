@@ -474,8 +474,6 @@ function getBarchartSerie(data, col, value) {
     $.each(data.data, function (key, val) {
 
         if (val.key[col] == value) {
-            alert(val.key[col]);
-            alert(val.values[0]);
             serie.push(val.values[0]);
         }
     });
