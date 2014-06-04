@@ -291,7 +291,7 @@ function getGraphQuery(url) {
                 if (data && data != "") {
                     for (var i = 0; i < data.length; i++) {
                         createAccordionForGraph(data[i].title, 'Graph' + (i + 1), (i + 1));
-                        getGraph(data[i].query, data[i].metadataUrl, data[i].type, 1,0, 'Graph' + (i + 1));
+                        getGraph(data[i].query, data[i].metadataUrl, data[i].type,data[i].colseries, data[i].colticks, 'Graph' + (i + 1));
                     }
                 }
             },
@@ -331,7 +331,8 @@ function createAccordionForTable(title, divid, order) {
 }
 
 function createAccordionForGraph(title, divid, order) {
-    $('#accordion3').append(' <div class="panel panel-default" ><div class="panel-heading"><h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#' + divid + '">' + title + '</a> </h4></div><div id="' + divid + '" class="panel-collapse collapse"><div class="panel-body"><div id="' + divid + '"></div></div></div></div>');
+    $('#graphtitle').append("<h4>" + title + "</h4>");
+   /// $('#accordion3').append(' <div class="panel panel-default" ><div class="panel-heading"><h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#' + divid + '">' + title + '</a> </h4></div><div id="' + divid + '" class="panel-collapse collapse"><div class="panel-body"><div id="' + divid + '"></div></div></div></div>');
 }
 
 function getTable(jsonQuery, url, cols, rows, accdiv) {
@@ -458,6 +459,22 @@ function getTicksOfBarchart(metadata, col) {
     return ticks;
 }
 
+function dataPoints(ticks, series) {
+   
+    var s = [];
+    var chartData = [];
+    var p = [[]];
+    for (var i = 0; i < series.length-1; i++) {
+        
+        $.each(series[i], function (key, val) {
+            p[i].push([ticks[key], parseFloat(val)]);
+        })
+       
+    }
+    chartData.push(p);
+    return p;
+}
+
 function getSeriesBarchart(metadata, data, col) {
     var series = [];
     $.each(metadata.variables[col].values, function (key, val) {
@@ -474,7 +491,7 @@ function getBarchartSerie(data, col, value) {
     $.each(data.data, function (key, val) {
 
         if (val.key[col] == value) {
-            serie.push(val.values[0]);
+            serie.push(parseFloat(val.values[0]));
         }
     });
     alert(serie.length);
@@ -485,25 +502,28 @@ function jqplotBar(metadata, data, colticks, colserie, divid) {
     plotseries = getSeriesBarchart(metadata, data, colserie);
     ticks = getTicksOfBarchart(metadata, colticks);
     //alert(plotseries);
-    alert(ticks);
+    //alert(dataPoints(ticks, plotseries)[0][0][0]);
+    //alert(ticks);
 
-    var s1 = plotseries[0];
-    var s2 = plotseries[1];
-    alert(s1);
-    alert(s2);
-    var plot1 = $.jqplot('1', [plotseries], {
+   // var s1 = getBarchartSerie(data,colserie, 1);
+    //var s2 = getBarchartSerie(data, colserie, 2);
+    //alert(s1);
+    //alert(s2);
+    
+    
+    plot1 = $.jqplot('graphoutput', getSeriesBarchart(metadata, data, colserie), {
         // The "seriesDefaults" option is an options object that will
         // be applied to all series in the chart.
         seriesDefaults: {
             renderer: $.jqplot.BarRenderer,
-            rendererOptions: { fillToZero: true }
+            //rendererOptions: { fillToZero: true }
         },
         // Custom labels for the series are specified with the "label"
         // option on the series option.  Here a series option object
         // is specified for each series.
         series: [
-            { label: 'Hotel' },
-            { label: 'Event Regristration' }
+            { label: 'Rural' },
+            { label: 'Urban' }
         ],
         // Show the legend and put it outside the grid, but inside the
         // plot container, shrinking the grid to accomodate the legend.
@@ -523,11 +543,25 @@ function jqplotBar(metadata, data, colticks, colserie, divid) {
             // not touch, the grid boundaries.  1.2 is the default padding.
             yaxis: {
                 pad: 1.05,
-                tickOptions: { formatString: '$%d' }
+               // tickOptions: { formatString: 'd' }
             }
         }
     });
 
+
+}
+
+
+function getQuerystring(key, default_) {
+    if (default_ == null) default_ = "";
+    key = key.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+    var regex = new RegExp("[\\?&#]" + key + "=([^&#]*)");
+    var qs = regex.exec(window.location.href);
+    if (qs == null)
+        return default_;
+    else
+        alert(qs[1]);
+        return qs[1];
 }
 
 function getDatasets(url) {

@@ -24,6 +24,8 @@ namespace MVC5.Models
         public Nullable<int> Graph1 { get; set; }
         public string GraphTitleAl { get; set; }
         public string GraphTitleEn { get; set; }
+        public Nullable<byte> ColSeriesNo { get; set; }
+        public Nullable<byte> ColTicksNo { get; set; }
     
         public virtual GraphType GraphType { get; set; }
         public virtual Section Section { get; set; }

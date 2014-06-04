@@ -107,7 +107,9 @@ namespace MVC5.Controllers
                 query = g.GraphTableQuery,
                 order = g.GraphOrder,
                 sectionid = g.SectionId,
-                type = g.GraphTypeId
+                type = g.GraphTypeId,
+                colseries = g.ColSeriesNo,
+                colticks = g.ColTicksNo
             }), JsonRequestBehavior.AllowGet);
         }
 
@@ -125,7 +127,9 @@ namespace MVC5.Controllers
                 query = g.GraphTableQuery,
                 order = g.GraphOrder,
                 sectionid = g.SectionId,
-                type = g.GraphTypeId
+                type = g.GraphTypeId,
+                colseries = g.ColSeriesNo,
+                colticks = g.ColTicksNo
             }), JsonRequestBehavior.AllowGet);
         }
 

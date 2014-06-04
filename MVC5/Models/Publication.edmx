@@ -29,6 +29,8 @@
           <Property Name="GraphTypeId" Type="int" />
           <Property Name="GraphTitleAl" Type="varchar" MaxLength="100" />
           <Property Name="GraphTitleEn" Type="varchar" MaxLength="100" />
+          <Property Name="ColSeriesNo" Type="tinyint" />
+          <Property Name="ColTicksNo" Type="tinyint" />
         </EntityType>
         <EntityType Name="GraphType">
           <Key>
@@ -182,6 +184,8 @@
           <Property Name="Graph1" Type="Int32" />
           <Property Name="GraphTitleAl" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="GraphTitleEn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ColSeriesNo" Type="Byte" />
+          <Property Name="ColTicksNo" Type="Byte" />
         </EntityType>
         <EntityType Name="GraphType">
           <Key>
@@ -329,6 +333,8 @@
           <EntitySetMapping Name="Graphs">
             <EntityTypeMapping TypeName="PublicationModel.Graph">
               <MappingFragment StoreEntitySet="Graph">
+                <ScalarProperty Name="ColTicksNo" ColumnName="ColTicksNo" />
+                <ScalarProperty Name="ColSeriesNo" ColumnName="ColSeriesNo" />
                 <ScalarProperty Name="GraphTitleEn" ColumnName="GraphTitleEn" />
                 <ScalarProperty Name="GraphTitleAl" ColumnName="GraphTitleAl" />
                 <ScalarProperty Name="Graph1" ColumnName="Graph" />
