@@ -251,6 +251,8 @@ function getSectionDesc(url) {
             success: function (data) {
                 $('#title').append(data.title);
                 $('#content').append(data.desc);
+                $('#content1').append(data.html1);
+                $('#content2').append(data.html2);
             },
             failure: function (errmsg) {
                 alert(errmsg);

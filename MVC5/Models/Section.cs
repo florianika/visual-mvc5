@@ -27,6 +27,10 @@ namespace MVC5.Models
         public string DescriptionEn { get; set; }
         public Nullable<int> Section1 { get; set; }
         public Nullable<int> BookId { get; set; }
+        public string html1Al { get; set; }
+        public string html1En { get; set; }
+        public string html2Al { get; set; }
+        public string html2En { get; set; }
     
         public virtual ICollection<Graph> Graphs { get; set; }
         public virtual ICollection<Table> Tables { get; set; }

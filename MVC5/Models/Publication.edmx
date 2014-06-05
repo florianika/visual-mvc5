@@ -51,6 +51,10 @@
           <Property Name="TitleEn" Type="varchar" MaxLength="50" />
           <Property Name="DescriptionAl" Type="varchar(max)" />
           <Property Name="DescriptionEn" Type="varchar(max)" />
+          <Property Name="html1Al" Type="varchar(max)" />
+          <Property Name="html1En" Type="varchar(max)" />
+          <Property Name="html2Al" Type="varchar(max)" />
+          <Property Name="html2En" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -212,6 +216,10 @@
           <Property Name="Section1" Type="Int32" />
           <Property Name="BookId" Type="Int32" />
           <NavigationProperty Name="Book" Relationship="PublicationModel.FK_Section_Book" FromRole="Section" ToRole="Book" />
+          <Property Name="html1Al" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="html1En" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="html2Al" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="html2En" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -364,6 +372,10 @@
           <EntitySetMapping Name="Sections">
             <EntityTypeMapping TypeName="PublicationModel.Section">
               <MappingFragment StoreEntitySet="Section">
+                <ScalarProperty Name="html2En" ColumnName="html2En" />
+                <ScalarProperty Name="html2Al" ColumnName="html2Al" />
+                <ScalarProperty Name="html1En" ColumnName="html1En" />
+                <ScalarProperty Name="html1Al" ColumnName="html1Al" />
                 <ScalarProperty Name="BookId" ColumnName="BookId" />
                 <ScalarProperty Name="Section1" ColumnName="Section" />
                 <ScalarProperty Name="SectionId" ColumnName="SectionId" />

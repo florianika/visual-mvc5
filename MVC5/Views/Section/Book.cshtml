@@ -73,48 +73,29 @@
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane active" id="text"><div><h1 id="title"></h1> <p id="content"></p></div></div>
-            <div class="tab-pane" id="table"><div id="output">
-                
-                
-                
-   <div class="panel-group" id="accordion2">
-    @*<div class="panel panel-default" >
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
-                    Collapsible Group Item #1
-                </a>
-            </h4>
-        </div>
-        <div id="collapseOne" class="panel-collapse collapse in">
-            <div class="panel-body">
-               <div id="firsttable"></div>
+            <div class="tab-pane active" id="text">
+                <div>
+                    <h1 id="title"></h1> 
+                    <p id="content"></p>
+                </div>
+                <div id="content1">
+                </div>
+                <div id="content2">
+                </div>
             </div>
-        </div>
-    </div>
-       <div class="panel panel-default">
-           <div class="panel-heading">
-               <h4 class="panel-title">
-                   <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
-                       Collapsible Group Item #2
-                   </a>
-                </h4>
-</div>
-           <div id="collapseTwo" class="panel-collapse collapse in">
-               <div class="panel-body">
-                   Anim pariatur cliche...
-               </div>
-           </div>
-       </div>*@
-</div>
+            
+            
+            <div class="tab-pane" id="table">
+                <div id="output">
+                    <div class="panel-group" id="accordion2">
+                    </div>
                 
                 </div>
             </div>
 
 
-            <div class="tab-pane" id="graph"><div id="graphtitle"></div><div id="graphoutput"></div></div>
-        </div>
+        <div class="tab-pane" id="graph"><div id="graphtitle"></div><div id="graphoutput"></div></div>
+     </div>
         
         <script>
             var plot1 = 0;
@@ -126,6 +107,8 @@
                         plot1 = 0; //for chart reload
                         $("#title").empty();
                         $("#content").empty();
+                        $("#content1").empty();
+                        $("#content2").empty();
                         $("#accordion2").empty();
                         $('#graphtitle').empty();
                         $('#graphoutput').empty();
@@ -158,9 +141,6 @@
 
         getSectionDesc('http://localhost:1690/Section/GetSelectedSection/'+ @(ViewBag.firstSectionId));
             });
-
-
-
 
             google.load("visualization", "1", { packages: ["corechart", "charteditor"] });
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {

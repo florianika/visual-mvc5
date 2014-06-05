@@ -38,7 +38,9 @@ namespace MVC5.Controllers
                                 id = section.SectionId,
                                 section = section.Section1,
                                 title = section.TitleAl,
-                                desc = section.DescriptionAl
+                                desc = section.DescriptionAl,
+                                html1 = section.html1Al,
+                                html2 = section.html2Al
                             }, JsonRequestBehavior.AllowGet);
         }
 
@@ -51,7 +53,9 @@ namespace MVC5.Controllers
                 id = section.SectionId,
                 section = section.Section1,
                 title = section.TitleEn,
-                desc = section.DescriptionEn
+                desc = section.DescriptionEn,
+                html1 = section.html1En,
+                html2 = section.html2En
             }, JsonRequestBehavior.AllowGet);
         }
         // API GET /Section/GetTablesOfSecton/1
