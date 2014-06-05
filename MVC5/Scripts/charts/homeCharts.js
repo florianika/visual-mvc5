@@ -268,7 +268,7 @@ function getTableQuery(url) {
                if (data && data != "") {
                    for (var i = 0; i < data.length; i++) {
                        createAccordionForTable(data[i].title, 'Table' + (i + 1), (i + 1));
-                       getTable(data[i].query, data[i].metadataUrl, data[i].cols, data[i].rows, '#Table' + (i + 1));
+                       getTable(data[i].query, data[i].metadataUrl, data[i].cols, data[i].rows, '#Table' + (i + 1), data[i].hiddenAttributes);
                    }
                    
                     //alert(JSON.stringify(data[0].query));
@@ -335,7 +335,7 @@ function createAccordionForGraph(title, divid, order) {
    /// $('#accordion3').append(' <div class="panel panel-default" ><div class="panel-heading"><h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#' + divid + '">' + title + '</a> </h4></div><div id="' + divid + '" class="panel-collapse collapse"><div class="panel-body"><div id="' + divid + '"></div></div></div></div>');
 }
 
-function getTable(jsonQuery, url, cols, rows, accdiv) {
+function getTable(jsonQuery, url, cols, rows, accdiv, hiddenAttributes) {
     $.ajax({
         url: url,
         type: 'POST',
@@ -352,7 +352,7 @@ function getTable(jsonQuery, url, cols, rows, accdiv) {
                     //alert(JSON.stringify(data));
                     
                     var dataTable = transforJsonToDataTable(metadata, data);
-                    pivot(dataTable, cols, rows, numberOfContents(data, "c"), accdiv);
+                    pivot(dataTable, cols, rows, numberOfContents(data, "c"), accdiv, hiddenAttributes);
                 },
                 failure: function (errmsg) {
                     alert(errmsg);
@@ -475,6 +475,16 @@ function dataPoints(ticks, series) {
     return p;
 }
 
+function getSeriesLables(metadata, col) {
+    var labels = [];
+    $.each(metadata.variables[col].valueTexts, function (key, val) {
+        var label = { "label": val }
+        labels.push(label);
+    });
+    //alert(labels);
+    return labels;
+}
+
 function getSeriesBarchart(metadata, data, col) {
     var series = [];
     $.each(metadata.variables[col].values, function (key, val) {
@@ -494,7 +504,7 @@ function getBarchartSerie(data, col, value) {
             serie.push(parseFloat(val.values[0]));
         }
     });
-    alert(serie.length);
+    //alert(serie.length);
     return serie;
 }
 
@@ -514,6 +524,7 @@ function jqplotBar(metadata, data, colticks, colserie, divid) {
     plot1 = $.jqplot('graphoutput', getSeriesBarchart(metadata, data, colserie), {
         // The "seriesDefaults" option is an options object that will
         // be applied to all series in the chart.
+        animate: !$.jqplot.use_excanvas,
         seriesDefaults: {
             renderer: $.jqplot.BarRenderer,
             //rendererOptions: { fillToZero: true }
@@ -521,10 +532,13 @@ function jqplotBar(metadata, data, colticks, colserie, divid) {
         // Custom labels for the series are specified with the "label"
         // option on the series option.  Here a series option object
         // is specified for each series.
-        series: [
-            { label: 'Rural' },
-            { label: 'Urban' }
-        ],
+
+        //TODO find the label from metadata
+        series: getSeriesLables(metadata, colserie),
+        //    [
+        //    { label: 'Rural' },
+        //    { label: 'Urban' }
+        //],
         // Show the legend and put it outside the grid, but inside the
         // plot container, shrinking the grid to accomodate the legend.
         // A value of "outside" would not shrink the grid and allow
@@ -545,6 +559,14 @@ function jqplotBar(metadata, data, colticks, colserie, divid) {
                 pad: 1.05,
                // tickOptions: { formatString: 'd' }
             }
+        },
+        highlighter: {
+            show: true,
+            tooltipAxes: 'y'
+
+        },
+        cursor: {
+            show: false
         }
     });
 
@@ -560,7 +582,7 @@ function getQuerystring(key, default_) {
     if (qs == null)
         return default_;
     else
-        alert(qs[1]);
+        //alert(qs[1]);
         return qs[1];
 }
 
@@ -637,7 +659,7 @@ function getDimensionsofDataset() {
 
 //Trying with pivot.js (it looks very nice)
 //TODO add a parameter for number of contents
-function pivot(dataTable, cols, rows, contentsNumber, accdiv) {
+function pivot(dataTable, cols, rows, contentsNumber, accdiv, hiddenAttributes) {
     //alert(cols);
     //alert(rows);
     
@@ -660,7 +682,7 @@ function pivot(dataTable, cols, rows, contentsNumber, accdiv) {
     }
 
          //   "Numer": function () { return aggTemplates.sum()([sumAttribute[2]]) }
-    str = str + ' },    rows: ["' + rows + '"],        cols: ["' + cols + '"]   } );';
+    str = str + ' },    rows: ["' + rows + '"],        cols: ["' + cols + '"], hiddenAttributes: ["'+ hiddenAttributes +'"]} );';
     //alert(str);
     eval(str);
 }

@@ -69,7 +69,8 @@ namespace MVC5.Controllers
                         section = t.SectionId,
                         cols = t.Cols,
                         rows = t.Rows,
-                        title = t.TitleAl
+                        title = t.TitleAl,
+                        hiddenAttributes = t.HiddenAttributesAl
             }), JsonRequestBehavior.AllowGet);
         }
 
@@ -89,7 +90,8 @@ namespace MVC5.Controllers
                 section = t.SectionId,
                 cols = t.ColsEn,
                 rows = t.RowEn,
-                title = t.TitleEn
+                title = t.TitleEn,
+                hiddenAttributes = t.HiddenAttributesEn
             }), JsonRequestBehavior.AllowGet);
         }
 

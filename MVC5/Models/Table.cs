@@ -28,6 +28,8 @@ namespace MVC5.Models
         public string RowEn { get; set; }
         public string TitleAl { get; set; }
         public string TitleEn { get; set; }
+        public string HiddenAttributesAl { get; set; }
+        public string HiddenAttributesEn { get; set; }
     
         public virtual Section Section { get; set; }
     }
