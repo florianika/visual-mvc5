@@ -64,8 +64,8 @@ namespace MVC5
             bundles.Add(new ScriptBundle("~/bundles/json_stat").Include(
                  "~/Scripts/json-stat.js"));
 
-            //bundles.Add(new ScriptBundle("~/bundles/gviz_api").Include(
-            //    "~/Scripts/gviz-api.js"));
+            bundles.Add(new ScriptBundle("~/bundles/gviz_api").Include(
+                "~/Scripts/gviz-api.js"));
         }
     }
 }
