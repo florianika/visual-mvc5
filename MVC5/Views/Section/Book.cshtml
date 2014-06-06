@@ -5,7 +5,7 @@
 }
 @Scripts.Render("~/bundles/jqplot_home_charts")
 
-<h2>Index</h2>
+<h2>@Model.First().Book.TitleAl</h2>
 
 @*<p>
         @Html.ActionLink("Create New", "Create")
@@ -75,7 +75,7 @@
         <div class="tab-content">
             <div class="tab-pane active" id="text">
                 <div>
-                    <h1 id="title"></h1> 
+                    <h2 id="title"></h2> 
                     <p id="content"></p>
                 </div>
                 <div id="content1">
@@ -142,7 +142,7 @@
         getSectionDesc('http://localhost:1690/Section/GetSelectedSection/'+ @(ViewBag.firstSectionId));
             });
 
-            google.load("visualization", "1", { packages: ["corechart", "charteditor"] });
+            //google.load("visualization", "1", { packages: ["corechart", "charteditor"] });
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
                 var start = e.target.toString().indexOf('#');
