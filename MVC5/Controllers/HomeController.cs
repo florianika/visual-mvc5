@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC5.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,7 +7,7 @@ using System.Web.Mvc;
 
 namespace MVC5.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         public ActionResult Index()
         {
@@ -34,7 +35,27 @@ namespace MVC5.Controllers
             return View();
         }
 
+        public ActionResult English()
+        {
+            // Validate input
+            String culture = CultureHelper.GetImplementedCulture("en");
+            // Save culture in a session
+            Session.Add("Language", "en");
+            HttpCookie cookie = Request.Cookies["_culture"];
 
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Albanian()
+        {
+            // Validate input
+            String culture = CultureHelper.GetImplementedCulture("en");
+            // Save culture in  session
+            Session.Add("Language", "sq");
+            HttpCookie cookie = Request.Cookies["_culture"];
+
+            return RedirectToAction("Index");
+        }
         public ActionResult GetS1()
         {
             var json1 = "{ ";

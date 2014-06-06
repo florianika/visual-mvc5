@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant(); 
 }
 
 <h2>Index</h2>
@@ -57,8 +58,8 @@
             <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
         </p>
         <div class="jumbotron">
-            <h1>Publikime</h1>
-            <p>Ju lutem zgjidhni nje liber ne te djathe per te shfeletuar ate.</p>
+            <h1>@Resources.Publications</h1>
+            <p>@Resources.PublicationsMessage</p>
         </div>       
 
 
@@ -68,7 +69,15 @@
         <div class="list-group">
             @foreach (var item in Model)
 {
-    <a href="/Section/Book/@Html.DisplayFor(modelItem => item.BookId)" class="list-group-item active">@Html.DisplayFor(modelItem => item.TitleAl)</a>
+   
+                if (culture=="sq"){
+                    <a href="/Section/Book/@Html.DisplayFor(modelItem => item.BookId)" class="list-group-item active">@Html.DisplayFor(modelItem => item.TitleAl)</a>                    
+                }
+
+                else
+                {
+                    <a href="/Section/Book/@Html.DisplayFor(modelItem => item.BookId)" class="list-group-item active">@Html.DisplayFor(modelItem => item.TitleEn)</a>
+                }
 }
         </div>
     </div><!--/span-->

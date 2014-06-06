@@ -28,11 +28,13 @@
                 @Html.ActionLink("INSTAT", "Index", "Home", null, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Rreth Nesh", "About", "Home")</li>
-                    <li>@Html.ActionLink("Publikimet", "Index", "Book")</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
+                <ul class="nav navbar-nav">                    
+                    <li>@Html.ActionLink(Resources.Home , "Index", "Home")</li>
+                    <li>@Html.ActionLink(Resources.About, "About", "Home")</li>
+                    <li>@Html.ActionLink(Resources.Publications, "Index", "Book")</li>
+                    <li>@Html.ActionLink(Resources.Contact, "Contact", "Home")</li>
+                    <li>@Html.ActionLink("En", "English", "Home")</li>
+                    <li>@Html.ActionLink("Al", "Albanian", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

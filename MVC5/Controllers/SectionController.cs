@@ -10,7 +10,7 @@ using MVC5.Models;
 
 namespace MVC5.Controllers
 {
-    public class SectionController : Controller
+    public class SectionController : BaseController
     {
         private PublicationEntities db = new PublicationEntities();
 
