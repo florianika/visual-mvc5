@@ -5,7 +5,7 @@
 }
 @Scripts.Render("~/bundles/jqplot_home_charts")
 
-<h2>@Model.First().Book.TitleAl</h2>
+<h2>@(Session["Language"] == "sq" ? @Model.First().Book.TitleAl :  @Model.First().Book.TitleEn) </h2>
 
 @*<p>
         @Html.ActionLink("Create New", "Create")
@@ -100,7 +100,9 @@
         <script>
             var plot1 = 0;
             $(document).ready(function () {
-               
+                
+                var language ='@Session["Language"]';
+                alert(language);
                 $(".list-group-item").click(function () {
                     if(getQuerystring('sectionid') !=  $(this).attr("id") ){
                             //alert($(this).attr("id"));
@@ -114,8 +116,14 @@
                         $('#graphoutput').empty();
                         $('.list-group-item').removeClass('active');
                         $('#' + $(this).attr("id")).addClass('active');
-                        getSectionDesc('http://localhost:1690/Section/GetSelectedSection/' + $(this).attr("id"));
-                        getTableQuery('http://localhost:1690/Section/GetTablesOfSection/' + $(this).attr("id"));
+                        if(language == 'sq') {
+                            getSectionDesc('http://localhost:1690/Section/GetSelectedSection/' + $(this).attr("id"));
+                            getTableQuery('http://localhost:1690/Section/GetTablesOfSection/' + $(this).attr("id"));
+                        }
+                        else {
+                            getSectionDesc('http://localhost:1690/Section/GetSelectedSectionEn/' + $(this).attr("id"));
+                            getTableQuery('http://localhost:1690/Section/GetTablesOfSectionEn/' + $(this).attr("id"));
+                        }
                     }
                     
                 });
@@ -198,7 +206,7 @@
             @foreach (var item in Model)
 {
 
-    <a href="#sectionid=@Html.DisplayFor(modelItem => item.SectionId)" class="list-group-item" id="@Html.DisplayFor(modelItem => item.SectionId)">@Html.DisplayFor(modelItem => item.TitleAl) @Html.DisplayFor(modelItem => item.Tables.Count)</a>
+    <a href="#sectionid=@Html.DisplayFor(modelItem => item.SectionId)" class="list-group-item" id="@Html.DisplayFor(modelItem => item.SectionId)">@(Session["Language"]== "sq" ? @Html.DisplayFor(modelItem => item.TitleAl) : @Html.DisplayFor(modelItem => item.TitleEn))  @Html.DisplayFor(modelItem => item.Tables.Count)</a>
 
 }
         </div>
