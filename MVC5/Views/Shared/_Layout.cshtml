@@ -4,6 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    @{
+        var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant(); 
+    }
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/jqplot/css")
     @Styles.Render("~/Content/pivot/css")
@@ -19,13 +22,34 @@
        
     </script>
     <script type="text/javascript">
+        jQuery(function () {
+            $(document).ajaxStart(function () {
+                $("#wait").css("display", "block");
+            });
+            $(document).ajaxComplete(function () {
+                $("#wait").css("display", "none");
+            });
 
+            var language ='@culture';
+            if (language == 'sq') {
+                $('#al').addClass('active');
+                $('#en').removeClass('active');
+            }
+            else {
+                $('#en').addClass('active');
+                $('#al').removeClass('active');
+            }
+        });
         function changeLanguage(lang) {
             if (lang == 'al') {
                 location.href = "@Url.Action("Albanian", "Home")";
+                $('#al').addClass('active');
+                $('#en').removeClass('active');
             }
             else {
                 location.href = "@Url.Action("English", "Home")";
+                $('#en').addClass('active');
+                $('#al').removeClass('active');
             }
         }
     </script>
@@ -52,8 +76,12 @@
 
                 </ul>
                 <div class="btn-group nav navbar-nav navbar-right">
-                    <button type="button" id="al" onclick="location.href = '@Url.Action("Albanian", "Home")'" class="btn btn-default">Al</button>
-                    <button type="button" id="en" onclick="location.href = '@Url.Action("English", "Home")'" class="btn btn-default">En</button>
+                    <button type="button" id="al" onclick="changeLanguage('al')" class="btn btn-xs">
+                        <span class="lang-xs lang-lbl" lang="sq"></span>
+                    </button>
+                    <button type="button" id="en" onclick="changeLanguage('en')" class="btn btn-xs">
+                        <span class="lang-xs lang-lbl" lang="en"></span>
+                    </button>
 
                 </div>
                @* @Html.Partial("_LoginPartial")*@
@@ -61,7 +89,6 @@
         </div>
     </div>
     <div class="container body-content">
-
         @RenderBody()
         <hr />
         <footer>

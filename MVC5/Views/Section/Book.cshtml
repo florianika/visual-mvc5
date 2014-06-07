@@ -100,12 +100,25 @@
         
         <script>
             var plot1 = 0;
+            var timeOfTableCall = 0;
+            var previousTableCall = -10000;
             $(document).ready(function () {
-                
+               
                 var language ='@culture';
                 alert(language);
                 $(".list-group-item").click(function () {
-                    if(getQuerystring('sectionid') !=  $(this).attr("id") ){
+                    
+                   
+
+                    if(getQuerystring('sectionid') !=  $(this).attr("id") ) {
+                        if(timeOfTableCall != 0 ) {
+                            previousTableCall = timeOfTableCall;
+                        }
+                        timeOfTableCall = new Date().getTime();
+                        //alert('previous time ' + previousTableCall);
+                        //alert('time ' + timeOfTableCall); 
+
+                        timePastBetweenTableCalls = timeOfTableCall - previousTableCall;
                             //alert($(this).attr("id"));
                         plot1 = 0; //for chart reload
                         $("#title").empty();
@@ -118,12 +131,16 @@
                         $('.list-group-item').removeClass('active');
                         $('#' + $(this).attr("id")).addClass('active');
                         if(language == 'sq') {
-                            getSectionDesc('http://localhost:1690/Section/GetSelectedSection/' + $(this).attr("id"));
-                            getTableQuery('http://localhost:1690/Section/GetTablesOfSection/' + $(this).attr("id"));
+                            getSectionDesc('http://localhost:1690/Section/GetSelectedSection/' +$(this).attr("id"));
+                                $('#accordion2').append('<img src="/Images/ajax-loader.gif" />');
+                                setTimeout(function() {getTableQuery('http://localhost:1690/Section/GetTablesOfSection/' + getQuerystring('sectionid'))}, 5000);
+                           
                         }
                         else {
                             getSectionDesc('http://localhost:1690/Section/GetSelectedSectionEn/' + $(this).attr("id"));
-                            getTableQuery('http://localhost:1690/Section/GetTablesOfSectionEn/' + $(this).attr("id"));
+                            
+                            $('#accordion2').append('<img src="/Images/ajax-loader.gif" />');
+                            setTimeout(function() {getTableQuery('http://localhost:1690/Section/GetTablesOfSection/' + getQuerystring('sectionid'))}, 5000);
                         }
                     }
                     
