@@ -2,10 +2,11 @@
 
 @{
     ViewBag.Title = "Seksionet";
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant(); 
 }
 @Scripts.Render("~/bundles/jqplot_home_charts")
 
-<h2>@Model.First().Book.TitleAl</h2>
+<h2>@(Session["Language"] == "sq" ? @Model.First().Book.TitleAl : @Model.First().Book.TitleEn)</h2>
 
 @*<p>
         @Html.ActionLink("Create New", "Create")
@@ -197,8 +198,13 @@
         <div class="list-group" id="listgroup">
             @foreach (var item in Model)
 {
-
-    <a href="#sectionid=@Html.DisplayFor(modelItem => item.SectionId)" class="list-group-item" id="@Html.DisplayFor(modelItem => item.SectionId)">@Html.DisplayFor(modelItem => item.TitleAl) @Html.DisplayFor(modelItem => item.Tables.Count)</a>
+             if (culture=="sq"){               
+                <a href="#sectionid=@Html.DisplayFor(modelItem => item.SectionId)" class="list-group-item" id="@Html.DisplayFor(modelItem => item.SectionId)">@Html.DisplayFor(modelItem => item.TitleAl) @Html.DisplayFor(modelItem => item.Tables.Count)</a>
+            }
+            else
+            {
+                <a href="#sectionid=@Html.DisplayFor(modelItem => item.SectionId)" class="list-group-item" id="@Html.DisplayFor(modelItem => item.SectionId)">@Html.DisplayFor(modelItem => item.TitleEn) @Html.DisplayFor(modelItem => item.Tables.Count)</a>
+            }     
 
 }
         </div>
