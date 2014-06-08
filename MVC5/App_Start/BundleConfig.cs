@@ -29,7 +29,8 @@ namespace MVC5
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css", 
-                      "~/Content/offcanvas.css"));
+                      "~/Content/offcanvas.css",
+                      "~/Content/languages.css"));
 
             bundles.Add(new StyleBundle("~/Content/jqplot/css").Include(
                     "~/Content/jquery.jqplot.min.css"));

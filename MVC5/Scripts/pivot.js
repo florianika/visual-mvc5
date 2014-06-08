@@ -50,9 +50,9 @@
   };
 
   aggregatorTemplates = {
-    sum: function(sigfig, scaler) {
+    sumNoTotals: function(sigfig, scaler) {
       if (sigfig == null) {
-        sigfig = 3;
+        sigfig = 0;
       }
       if (scaler == null) {
         scaler = 1;
@@ -60,22 +60,54 @@
       return function(_arg) {
         var attr;
         attr = _arg[0];
-        return function() {
+        return function(data, rowKey, colKey) {
           return {
-            sum: 0,
+              sum: 0,
             push: function(record) {
-              if (!isNaN(parseFloat(record[attr]))) {
-                return this.sum += parseFloat(record[attr]);
+                if (!isNaN(parseFloat(record[attr]))) {
+                    if (rowKey != "" && colKey != "") {
+                        //alert(rowKey );
+                        return this.sum += parseFloat(record[attr]);
+                    }
+                    else return "NA";
               }
             },
-            value: function() {
-              return this.sum;
+            value: function () {
+             
+                    return this.sum;
             },
             format: numberFormat(sigfig, scaler),
             label: "Sum of " + attr
           };
         };
       };
+    },
+    sum: function (sigfig, scaler) {
+        if (sigfig == null) {
+            sigfig = 3;
+        }
+        if (scaler == null) {
+            scaler = 1;
+        }
+        return function (_arg) {
+            var attr;
+            attr = _arg[0];
+            return function () {
+                return {
+                    sum: 0,
+                    push: function (record) {
+                        if (!isNaN(parseFloat(record[attr]))) {
+                            return this.sum += parseFloat(record[attr]);
+                        }
+                    },
+                    value: function () {
+                        return this.sum;
+                    },
+                    format: numberFormat(sigfig, scaler),
+                    label: "Sum of " + attr
+                };
+            };
+        };
     },
     average: function(sigfig, scaler) {
       if (sigfig == null) {

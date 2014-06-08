@@ -1,219 +1,4 @@
-﻿//$(document).ready(function () {
-   
-    
-//    var s1 = [200, 600, 700, 1000];
-//    var s2 = [460, -210, 690, 820];
-//    var s3 = [-260, -440, 320, 200];
-//     Can specify a custom tick Array.
-//     Ticks should match up one for each y value (category) in the series.
-//    var ticks = ['May', 'June', 'July', 'August'];
-
-//    var plot1 = $.jqplot('chart3', [s1, s2, s3], {
-//         The "seriesDefaults" option is an options object that will
-//         be applied to all series in the chart.
-//        seriesDefaults: {
-//            renderer: $.jqplot.BarRenderer,
-//            rendererOptions: { fillToZero: true }
-//        },
-//         Custom labels for the series are specified with the "label"
-//         option on the series option.  Here a series option object
-//         is specified for each series.
-//        series: [
-//            { label: 'Hotel' },
-//            { label: 'Event Regristration' },
-//            { label: 'Airfare' }
-//        ],
-//         Show the legend and put it outside the grid, but inside the
-//         plot container, shrinking the grid to accomodate the legend.
-//         A value of "outside" would not shrink the grid and allow
-//         the legend to overflow the container.
-//        legend: {
-//            show: true,
-//            location: 'n'
-//            placement: 'outsideGrid'
-//        },
-//        axes: {
-//             Use a category axis on the x axis and use our custom ticks.
-//            xaxis: {
-//                renderer: $.jqplot.CategoryAxisRenderer,
-//                ticks: ticks
-//            },
-//             Pad the y axis just a little so bars can get close to, but
-//             not touch, the grid boundaries.  1.2 is the default padding.
-//            yaxis: {
-//                pad: 1.05,
-//                tickOptions: { formatString: '$%d' }
-//            }
-//        }
-//    });
-
-    
-//});
-
-
-function drowChart2() {
-    var data = [['Heavy Industry', 12], ['Retail', 9], ['Light Industry', 14],
-                    ['Out of home', 16], ['Commuting', 7], ['Orientation', 9]];
-    var plot1 = jQuery.jqplot('chart2', [data],
-      {
-          seriesDefaults: {
-              // Make this a pie chart.
-              renderer: jQuery.jqplot.PieRenderer,
-              rendererOptions: {
-                  // Put data labels on the pie slices.
-                  // By default, labels show the percentage of the slice.
-                  showDataLabels: true
-              }
-          },
-          legend: { show: true, location: 'e' }
-      }
-    );
-
-}
-
-function drawChart1() {
-    var line1 = JSONstat("http://json-stat.org/samples/oecd-canada.json").Dataset(0).toTable();
-    //var line1 = [['23-May-08', 578.55], ['20-Jun-08', 566.5], ['25-Jul-08', 480.88], ['22-Aug-08', 509.84],
-    //   ['26-Sep-08', 454.13], ['24-Oct-08', 379.75], ['21-Nov-08', 303], ['26-Dec-08', 308.56],
-    //   ['23-Jan-09', 299.14], ['20-Feb-09', 346.51], ['20-Mar-09', 325.99], ['24-Apr-09', 386.15]];
-    alert(line1);
-    var plot1 = $.jqplot('chart1', [line1], {
-        //title: 'Data Point Highlighting',
-        axes: {
-            xaxis: {
-                //renderer: $.jqplot.DateAxisRenderer,
-                tickOptions: {
-                    formatString: '%b&nbsp;%#d'
-                }
-            },
-            yaxis: {
-                tickOptions: {
-                    formatString: '$%.2f'
-                }
-            }
-        },
-        highlighter: {
-            show: true,
-            sizeAdjust: 7.5
-        },
-        cursor: {
-            show: false
-        }
-    });
-
-}
-
-function drawChart4() {
-    var s1 = [[2002, 112000], [2003, 122000], [2004, 104000], [2005, 99000], [2006, 121000],
-   [2007, 148000], [2008, 114000], [2009, 133000], [2010, 161000], [2011, 173000]];
-    var s2 = [[2002, 10200], [2003, 10800], [2004, 11200], [2005, 11800], [2006, 12400],
-    [2007, 12800], [2008, 13200], [2009, 12600], [2010, 13100]];
-
-    var ajaxDataRenderer = function(url, plot, options) {
-    var ret = null;
-    $.ajax({
-      // have to use synchronous here, else the function 
-      // will return before the data is fetched
-      async: false,
-      url: url,
-      dataType:"json",
-      success: function(data) {
-        ret = data;
-      }
-    });
-    return ret;
-  };
- 
-  // The url for our json data
-    var jsonurl = "/Home/GetS1";
-    var jsonurl2 = "/Home/GetS2";
-
-    plot1 = $.jqplot("chart4", [jsonurl], {
-        // Turns on animatino for all series in this plot.
-        dataRenderer: ajaxDataRenderer,
-        animate: true,
-        // Will animate plot on calls to plot1.replot({resetAxes:true})
-        animateReplot: true,
-        cursor: {
-            show: true,
-            zoom: true,
-            looseZoom: true,
-            showTooltip: false
-        },
-        series: [
-            {
-                pointLabels: {
-                    show: true
-                },
-                renderer: $.jqplot.BarRenderer,
-                showHighlight: false,
-                yaxis: 'y2axis',
-                rendererOptions: {
-                    // Speed up the animation a little bit.
-                    // This is a number of milliseconds.  
-                    // Default for bar series is 3000.  
-                    animation: {
-                        speed: 2500
-                    },
-                    barWidth: 15,
-                    barPadding: -15,
-                    barMargin: 0,
-                    highlightMouseOver: false
-                }
-            },
-            {
-                rendererOptions: {
-                    // speed up the animation a little bit.
-                    // This is a number of milliseconds.
-                    // Default for a line series is 2500.
-                    animation: {
-                        speed: 2000
-                    }
-                }
-            }
-        ],
-        axesDefaults: {
-            pad: 0
-        },
-        axes: {
-            // These options will set up the x axis like a category axis.
-            xaxis: {
-                tickInterval: 1,
-                drawMajorGridlines: false,
-                drawMinorGridlines: true,
-                drawMajorTickMarks: false,
-                rendererOptions: {
-                    tickInset: 0.5,
-                    minorTicks: 1
-                }
-            },
-            yaxis: {
-                tickOptions: {
-                    formatString: "$%'d"
-                },
-                rendererOptions: {
-                    forceTickAt0: true
-                }
-            },
-            y2axis: {
-                tickOptions: {
-                    formatString: "$%'d"
-                },
-                rendererOptions: {
-                    // align the ticks on the y2 axis with the y axis.
-                    alignTicks: true,
-                    forceTickAt0: true
-                }
-            }
-        },
-        highlighter: {
-            show: true,
-            showLabel: true,
-            tooltipAxes: 'y',
-            sizeAdjust: 7.5, tooltipLocation: 'ne'
-        }
-    });
-}
+﻿
 
 function drawTable() {
 
@@ -244,11 +29,13 @@ function drawTable() {
 }
 
 function getSectionDesc(url) {
+    $('#content').html('<img src="/Images/ajax-loader.gif" />')
     $.ajax(
         {
             url: url,
             datatype: 'json',
             success: function (data) {
+                $('#content').empty();
                 $('#title').append(data.title);
                 $('#content').append(data.desc);
                 $('#content1').append(data.html1);
@@ -262,27 +49,30 @@ function getSectionDesc(url) {
 }
 
 function getTableQuery(url) {
-    $.ajax(
-       {
-           url: url,
-           datatype: 'json',
-           success: function (data) {
-               if (data && data != "") {
-                   for (var i = 0; i < data.length; i++) {
-                       createAccordionForTable(data[i].title, 'Table' + (i + 1), (i + 1));
-                       getTable(data[i].query, data[i].metadataUrl, data[i].cols, data[i].rows, '#Table' + (i + 1), data[i].hiddenAttributes);
-                   }
-                   
-                    //alert(JSON.stringify(data[0].query));
-                   //return JSON.stringify(data[0].query);
-               }
-           },
-           failure: function (errmsg) {
-               alert(errmsg);
-           }
+   
+        $.ajax(
+           {
+               url: url,
+               datatype: 'json',
+               success: function (data) {
+                   $("#accordion2").empty();
+                   if (data && data != "") {
+                       for (var i = 0; i < data.length; i++) {
+                           createAccordionForTable(data[i].title, 'Table' + (i + 1), (i + 1));
+                           getTable(data[i].query, data[i].metadataUrl, data[i].cols, data[i].rows, '#Table' + (i + 1), data[i].hiddenAttributes);
+                       }
 
-       });
-}
+                       //alert(JSON.stringify(data[0].query));
+                       //return JSON.stringify(data[0].query);
+                   }
+               },
+               failure: function (errmsg) {
+                   alert(errmsg);
+               }
+
+           });
+    }
+
 
 function getGraphQuery(url) {
     $.ajax(
@@ -328,11 +118,12 @@ function numberOfContents(vector, val) {
 }
 
 function createAccordionForTable(title, divid, order) {
-   
+
     $('#accordion2').append(' <div class="panel panel-default" ><div class="panel-heading"><h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#' + divid + '">' + title + '</a> </h4></div><div id="' + divid + '" class="panel-collapse collapse"><div class="panel-body"><div id="' + divid + '"></div></div></div></div>');
 }
 
 function createAccordionForGraph(title, divid, order) {
+
     $('#graphtitle').append("<h4>" + title + "</h4>");
    /// $('#accordion3').append(' <div class="panel panel-default" ><div class="panel-heading"><h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#' + divid + '">' + title + '</a> </h4></div><div id="' + divid + '" class="panel-collapse collapse"><div class="panel-body"><div id="' + divid + '"></div></div></div></div>');
 }
@@ -352,6 +143,7 @@ function getTable(jsonQuery, url, cols, rows, accdiv, hiddenAttributes) {
                 success: function (metadata) {
                     //alert(JSON.stringify(metadata));
                     //alert(JSON.stringify(data));
+                    
                     
                     var dataTable = transforJsonToDataTable(metadata, data);
                     pivot(dataTable, cols, rows, numberOfContents(data, "c"), accdiv, hiddenAttributes);
@@ -659,8 +451,7 @@ function getDimensionsofDataset() {
 
 }
 
-//Trying with pivot.js (it looks very nice)
-//TODO add a parameter for number of contents
+
 function pivot(dataTable, cols, rows, contentsNumber, accdiv, hiddenAttributes) {
     //alert(cols);
     //alert(rows);
