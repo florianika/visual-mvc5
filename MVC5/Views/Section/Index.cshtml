@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MVC5.Models.Section>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Index1";
     var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant(); 
 }
 @Scripts.Render("~/bundles/jqplot_home_charts")
@@ -78,7 +78,8 @@
         </div>
         <script>
             $(function () {
-                $('#myTab').tab()
+                alert("index");
+                $('#myTab').tab()                
             });
             google.load("visualization", "1", { packages: ["corechart", "charteditor"] });
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -126,11 +127,11 @@
         <div class="list-group">
         @foreach (var item in Model) {
             if (culture=="sq"){
-                <a href="#" class="list-group-item active">@Html.DisplayFor(modelItem => item.TitleAl)</a>                
+                <a href="#" class="list-group-item active">@Html.DisplayFor(modelItem => item.TitleEn)</a>                
             }
             else
             {
-                <a href="#" class="list-group-item active">@Html.DisplayFor(modelItem => item.TitleEn)</a>
+                <a href="#" class="list-group-item active">@Html.DisplayFor(modelItem => item.TitleAl)</a>
             }                                              
         }
         </div>

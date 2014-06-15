@@ -34,12 +34,13 @@ function getSectionDesc(url) {
         {
             url: url,
             datatype: 'json',
-            success: function (data) {
+            success: function (data) {                              
                 $('#content').empty();
                 $('#title').append(data.title);
                 $('#content').append(data.desc);
                 $('#content1').append(data.html1);
                 $('#content2').append(data.html2);
+                
             },
             failure: function (errmsg) {
                 alert(errmsg);
@@ -60,10 +61,14 @@ function getTableQuery(url) {
                        for (var i = 0; i < data.length; i++) {
                            createAccordionForTable(data[i].title, 'Table' + (i + 1), (i + 1));
                            getTable(data[i].query, data[i].metadataUrl, data[i].cols, data[i].rows, '#Table' + (i + 1), data[i].hiddenAttributes);
-                       }
-
+                       }                     
                        //alert(JSON.stringify(data[0].query));
                        //return JSON.stringify(data[0].query);
+                   }
+                   else {
+                       var $tabTable = $('[data-toggle="tab"][href="#table"]');
+                       $tabTable.hide();
+                       $tabTable.tab('hide');
                    }
                },
                failure: function (errmsg) {
@@ -73,7 +78,20 @@ function getTableQuery(url) {
            });
     }
 
+function showAllTabs() {    
+    
+    var $tabGraph = $('[data-toggle="tab"][href="#graph"]');
+    $tabGraph.show();
+    $tabGraph.tab('show');
 
+    var $tabTable = $('[data-toggle="tab"][href="#table"]');
+    $tabTable.show();
+    $tabTable.tab('show');
+
+    var $tab = $('[data-toggle="tab"][href="#text"]');
+    $tab.show();
+    $tab.tab('show');
+}
 function getGraphQuery(url) {
     $.ajax(
         {
@@ -85,6 +103,9 @@ function getGraphQuery(url) {
                         createAccordionForGraph(data[i].title, 'Graph' + (i + 1), (i + 1));
                         getGraph(data[i].query, data[i].metadataUrl, data[i].type,data[i].colseries, data[i].colticks, 'Graph' + (i + 1));
                     }
+                }
+                else {
+                    
                 }
             },
             failure: function (errmsg) {

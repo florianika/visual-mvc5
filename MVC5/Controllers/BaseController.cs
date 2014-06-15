@@ -19,9 +19,13 @@ namespace MVC5.Controllers
             if (Session["Language"] != null)
                 cultureName = Session["Language"].ToString();
             else
+            {
                 cultureName = Request.UserLanguages != null && Request.UserLanguages.Length > 0 ?
                         Request.UserLanguages[0] :  // obtain it from HTTP header AcceptLanguages
                         null;
+                Session["Language"] = cultureName;
+            }
+                
             // Validate culture name
             cultureName = CultureHelper.GetImplementedCulture(cultureName); // This is safe
 

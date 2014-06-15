@@ -68,9 +68,9 @@
 
 
         <ul class="nav nav-tabs" id="myTab">
-            <li class="active"><a href="#text" data-toggle="tab">@Resources.Description</a></li>
-            <li><a href="#table" data-toggle="tab">@Resources.Tables</a></li>
-            <li><a href="#graph" data-toggle="tab">@Resources.Charts</a></li>
+            <li id="tabDescription" class="active"><a href="#text" data-toggle="tab">@Resources.Description</a></li>
+            <li id="tabTable"><a href="#table" data-toggle="tab">@Resources.Tables</a></li>
+            <li id="tabGraph"><a href="#graph" data-toggle="tab">@Resources.Charts</a></li>
         </ul>
 
         <div class="tab-content">
@@ -103,13 +103,10 @@
             var timeOfTableCall = 0;
             var previousTableCall = -10000;
             $(document).ready(function () {
-               
                 var language ='@culture';
                 $(".list-group-item").click(function () {
-                    
-                   
-
                     if(getQuerystring('sectionid') !=  $(this).attr("id") ) {
+
                         if(timeOfTableCall != 0 ) {
                             previousTableCall = timeOfTableCall;
                         }
@@ -129,6 +126,7 @@
                         $('#graphoutput').empty();
                         $('.list-group-item').removeClass('active');
                         $('#' + $(this).attr("id")).addClass('active');
+                        showAllTabs();                        
                         if(language == 'sq') {
                             getSectionDesc('http://localhost:1690/Section/GetSelectedSection/' +$(this).attr("id"));
                             $('#accordion2').append('<img src="/Images/ajax-loader.gif" />');
@@ -141,8 +139,10 @@
                             $('#accordion2').append('<img src="/Images/ajax-loader.gif" />');
                             setTimeout(function() {getTableQuery('http://localhost:1690/Section/GetTablesOfSection/' + getQuerystring('sectionid'))}, 5000);
                         }
+                        
                     }
-                    
+                    //alert();
+                    //alert(test);                    
                 });
         //$("#1").click(function () {
         //    $("#title").empty();
