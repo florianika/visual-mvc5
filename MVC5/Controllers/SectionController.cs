@@ -128,7 +128,7 @@ namespace MVC5.Controllers
             return Json(graphs.Select(g => new
             {
                 id = g.GraphId,
-                title = g.GraphTitleAl,
+                title = g.GraphTitleEn,
                 metadataUrl = g.GraphTableUrlEn,
                 query = g.GraphTableQuery,
                 order = g.GraphOrder,
