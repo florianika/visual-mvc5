@@ -40,8 +40,8 @@ function getSectionDesc(url) {
                 $('#content').append(data.desc);
                 $('#content1').append(data.html1);
                 $('#content2').append(data.html2);                
-                
-                if (parseInt(data.numbertOfTables) == 0) {
+                //alert(data.numbertOfGraphs);
+                if (parseInt(data.numberOfTables) == 0) {
                     var $tabTable = $('[data-toggle="tab"][href="#table"]');
                     $tabTable.hide();
                 }
@@ -49,7 +49,7 @@ function getSectionDesc(url) {
                     var $tabTable = $('[data-toggle="tab"][href="#table"]');
                     $tabTable.show();
                 }
-                if (parseInt(data.numbertOfTables) == 0) {
+                if (parseInt(data.numberOfGraphs) == 0) {
                     var $tabGraph = $('[data-toggle="tab"][href="#graph"]');
                     $tabGraph.hide();
                 }
