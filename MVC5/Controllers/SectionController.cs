@@ -34,8 +34,7 @@ namespace MVC5.Controllers
         public JsonResult GetSelectedSection(int id)
         {
             var section = db.Sections.Find(id);
-            if (Session["Language"].Equals("sq"))
-            {
+            
                 return Json(new
                 {
                     id = section.SectionId,
@@ -46,23 +45,7 @@ namespace MVC5.Controllers
                     html2 = section.html2Al,
                     numberOfTables = section.Tables.Count,
                     numberOfGraphs = section.Graphs.Count
-                }, JsonRequestBehavior.AllowGet);
-            }
-            else
-            {
-                return Json(new
-                {
-                    id = section.SectionId,
-                    section = section.Section1,
-                    title = section.TitleEn,
-                    desc = section.DescriptionEn,
-                    html1 = section.html1En,
-                    html2 = section.html2En,
-                    numbertOfTables = section.Tables.Count,
-                    numberOfGraphs = section.Graphs.Count
-                }, JsonRequestBehavior.AllowGet);
-            }
-            
+                }, JsonRequestBehavior.AllowGet);          
             
         }
 
@@ -77,7 +60,9 @@ namespace MVC5.Controllers
                 title = section.TitleEn,
                 desc = section.DescriptionEn,
                 html1 = section.html1En,
-                html2 = section.html2En
+                html2 = section.html2En,
+                numberOfTables = section.Tables.Count,
+                numberOfGraphs = section.Graphs.Count
             }, JsonRequestBehavior.AllowGet);
         }
         // API GET /Section/GetTablesOfSecton/1
