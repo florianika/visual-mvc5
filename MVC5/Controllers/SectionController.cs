@@ -43,7 +43,9 @@ namespace MVC5.Controllers
                     title = section.TitleAl,
                     desc = section.DescriptionAl,
                     html1 = section.html1Al,
-                    html2 = section.html2Al
+                    html2 = section.html2Al,
+                    numbertOfTables = section.Tables.Count,
+                    numberOfGraphs = section.Graphs.Count
                 }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -55,7 +57,9 @@ namespace MVC5.Controllers
                     title = section.TitleEn,
                     desc = section.DescriptionEn,
                     html1 = section.html1En,
-                    html2 = section.html2En
+                    html2 = section.html2En,
+                    numbertOfTables = section.Tables.Count,
+                    numberOfGraphs = section.Graphs.Count
                 }, JsonRequestBehavior.AllowGet);
             }
             

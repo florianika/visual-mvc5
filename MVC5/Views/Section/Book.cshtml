@@ -128,7 +128,7 @@
                         $('#graphoutput').empty();
                         $('.list-group-item').removeClass('active');
                         $('#' + $(this).attr("id")).addClass('active');
-                        showAllTabs();                        
+                        //showAllTabs();                        
                         if(language == 'sq') {
                             getSectionDesc('http://localhost:1690/Section/GetSelectedSection/' +$(this).attr("id"));
                             $('#accordion2').append('<img src="/Images/ajax-loader.gif" />');
@@ -136,7 +136,7 @@
                            
                         }
                         else {
-                            getSectionDesc('http://localhost:1690/Section/GetSelectedSectionEn/' + $(this).attr("id"));
+                            getSectionDesc('http://localhost:1690/Section/GetSelectedSection/' + $(this).attr("id"));
                             
                             $('#accordion2').append('<img src="/Images/ajax-loader.gif" />');
                             setTimeout(function() {getTableQuery('http://localhost:1690/Section/GetTablesOfSection/' + getQuerystring('sectionid'))}, 5000);
