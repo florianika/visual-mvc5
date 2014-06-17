@@ -103,10 +103,8 @@
             var timeOfTableCall = 0;
             var previousTableCall = -10000;
             $(document).ready(function () {
-               
-                var language ='@culture';                
-                //alert(language);
-                $(".list-group-item").click(function () {                        
+                var language ='@culture';
+                $(".list-group-item").click(function () {
                     if(getQuerystring('sectionid') !=  $(this).attr("id") ) {
 
                         if(timeOfTableCall != 0 ) {
@@ -169,7 +167,7 @@
         getSectionDesc('http://localhost:1690/Section/GetSelectedSection/'+ @(ViewBag.firstSectionId));
             });
 
-            google.load("visualization", "1", { packages: ["corechart", "charteditor"] });
+            //google.load("visualization", "1", { packages: ["corechart", "charteditor"] });
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 
                 var start = e.target.toString().indexOf('#');
@@ -201,8 +199,15 @@
                     //getTable(jsonQuery, getTableMetadataUrl('http://localhost:1690/Section/GetTablesOfSection/3'));
                 }
                 if(e.target.toString().substring(start, end) === '#graph') {
+                    alert(plot1);
                     if (plot1 == 0) {
-                        getGraphQuery('http://localhost:1690/Section/GetGraphOfSection/'+ getQuerystring('sectionid'));
+                        alert('ok');
+                        if ('@culture' == 'sq') {
+                            getGraphQuery('http://localhost:1690/Section/GetGraphOfSection/'+ getQuerystring('sectionid'));
+                        }
+                        else {
+                            getGraphQuery('http://localhost:1690/Section/GetGraphOfSectionEn/'+ getQuerystring('sectionid'));
+                        }
                     }
                     else {
                         plot1.replot({resetAxes:true});

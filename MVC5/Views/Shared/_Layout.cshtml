@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - INSTAT</title>
     @{
         var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant(); 
     }
@@ -23,12 +23,12 @@
     </script>
     <script type="text/javascript">
         jQuery(function () {
-            $(document).ajaxStart(function () {
-                $("#wait").css("display", "block");
-            });
-            $(document).ajaxComplete(function () {
-                $("#wait").css("display", "none");
-            });
+            if (window.location.href.toString().search("Home") != -1) {
+                $("#home").addClass('active');
+            }
+            if (window.location.href.toString().search("Book") != -1) {
+                $("#book").addClass('active');
+            }
 
             var language ='@culture';
             if (language == 'sq') {
@@ -69,10 +69,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">                    
-                    <li>@Html.ActionLink(Resources.Home , "Index", "Home")</li>
-                    <li>@Html.ActionLink(Resources.About, "About", "Home")</li>
-                    <li>@Html.ActionLink(Resources.Publications, "Index", "Book")</li>
-                    <li>@Html.ActionLink(Resources.Contact, "Contact", "Home")</li>
+                    <li id="home">@Html.ActionLink(Resources.Home , "Index", "Home")</li>
+                    <li id="about">@Html.ActionLink(Resources.About, "About", "Home")</li>
+                    <li id="book">@Html.ActionLink(Resources.Publications, "Index", "Book")</li>
+                    <li id="contact">@Html.ActionLink(Resources.Contact, "Contact", "Home")</li>
 
                 </ul>
                 <div class="btn-group nav navbar-nav navbar-right">
@@ -92,7 +92,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - INSTAT</p>
         </footer>
     </div>
 
